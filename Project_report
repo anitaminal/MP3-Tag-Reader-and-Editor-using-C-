@@ -1,0 +1,79 @@
+Project Overview:
+The MP3 Tag Reader and Editor is a command-line application developed in C to read, display, and edit ID3 metadata stored in MP3 files.
+ID3 is a metadata container used in conjunction with the MP3 audio file format. It allows information such as the title, artist, album, track number, and other information about the file
+to be stored in the file itself. The version used here is ID3V2.
+
+Features:
+* View metadata stored in an MP3 file.
+* Edit selected metadata fields.
+* Validate command-line arguments.
+* Verify the MP3 file and ID3 tag header before processing.
+* Read frame IDs, frame sizes, and metadata from the file.
+* Update text fields without changing the existing frame size, provided the new text fits within the available space.
+* Display help instructions for supported operations.
+
+ID3V2:
+  * VERSION
+      1. ID3v2.2
+      2. ID3v2.3
+      3. ID3v2.4  
+  * ID3v2 header has 10 bytes, where,
+      1. ID3v2/file identifier is "ID3"
+      2. ID3v2 version is $03 00 (2, 3, or 4)
+      3. ID3v2 flag occupies 1 byte 
+      4. ID3v2 size is 4 bytes
+  * ID3v2.3 or ID3v2.4 Frame header
+      1. Frame ID $xx xx xx xx (Four bytes)
+        -> TPE1 - Artist name
+        -> TIT2 - Title / Song name
+        -> TALB - Album
+        -> TYER - Year
+        -> TCON - Content type
+        -> TCOM - Comment 
+      2. Size $xx xx xx xx (Four bytes)
+      3. Flags $xx xx (2 Bytes)
+
+Prerequisites:
+* knowledge of ID3 tags
+* File I/O
+* String Handling
+* Pointers and structure
+Steps:
+* Compile the required file using gcc *.c
+* Run the program by passing information through Command line argument
+   1. To view please pass like: ./a.out -v mp3_file_name
+   2. To edit please pass like: ./a.out -e -t/-a/-A/-m/-y/-c changing_text mp3_file_name
+   3. To get help pass like: ./a.out --help
+* View Operation:
+    -> validate the command line argument of view.
+    -> Open the specified MP3 file and validate the ID3 header and supported version.
+    -> Read each frame ID and its size.
+    -> Extract the corresponding metadata from the frame.
+    -> Store the extracted details in a structure.
+    -> Display the metadata in a readable format.
+* Edit Operation:
+    -> Validate the command line argument of edit.
+    -> Identify the metadata field selected by the user.
+    -> Locate the corresponding frame in the MP3 file.
+    -> Read the existing frame size and encoding information.
+    -> Check whether the new text fits within the existing frame.
+    -> Write the updated text and fill any remaining space when required.
+    -> Report whether the update succeeded.
+* Help Operation:
+    -> Display the available commands and explain how to view or edit MP3 metadata.
+      1. -v -> to view mp3 file contents
+      2. -e -> to edit mp3 file contents
+        2.1      -t -> to edit song title
+        2.2      -a -> to edit artist name
+        2.3      -A -> to edit artist name
+        2.4      -y -> to edit year
+        2.5      -m -> to edit content
+        2.6      -c -> to edit comment
+Learnings and Challenges: 
+* Reading and writing binary files using C file I/O functions.
+* Locating specific frames within a binary file.
+* Updating data at the correct file position.
+* Understanding the ID3v2.3 header and frame structure.
+* Reading four-byte frame sizes and combining individual bytes.
+Conclusion
+This project helped strengthen my understanding of C programming and binary file handling to implementing an MP3 metadata reader and editor.
